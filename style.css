@@ -1,71 +1,61 @@
-
-
-$nodeStreak: #a2cef4;
-$computationalFogTop: #6084d7;
-$computationalFogBot: #6084d7;
-$visualDistortionZapper: 360px;
-$nanoVelocity: 2s;
-
-html {
-  height: 100%;
+#retrobg-ground {
+  position: absolute;
   overflow: hidden;
+  width: 100%;
+  height: 45%;
+  bottom: 0;
+  border-top: 2px solid #bf578c;
+  background-color: #000;
 }
-
-body {
-  position: relative;
-  height: 100%;
-  background: linear-gradient($computationalFogTop 25%, $nodeStreak 50%, $nodeStreak 50%, $computationalFogBot 100%);  
+.retrobg-shutdown #retrobg-ground {
+  border-color: #000;
 }
-
-.wrap {
+#retrobg-groundShadow {
+  position: absolute;
+  top: 0;
   width: 100%;
   height: 100%;
+  background-image: linear-gradient( #000 0%, transparent );
+}
+
+/* ............................................................... */
+#retrobg-linesWrap {
+  height: 100%;
+  perspective: 1000px;
+  perspective-origin: center top;
+}
+#retrobg-lines {
   position: absolute;
-  margin: 0 auto;
-  perspective: $visualDistortionZapper;
-  perspective-origin: 50% 50%;  
+  width: 100%;
+  height: 100%;
+  transform-origin: top center;
+  animation: .35s linear infinite retrobg-lines-anim;
 }
-
-.top-plane {
-  width: 200%;
-  height: 130%;
+.retrobg-shutdown #retrobg-lines {
+  animation-duration: 5s;
+}
+@keyframes retrobg-lines-anim {
+  from { transform: rotateX( 84deg ) translateY( 0 ); }
+  to { transform: rotateX( 84deg ) translateY( 100px ); }
+}
+#retrobg-hlines,
+#retrobg-vlines {
   position: absolute;
-  bottom: -30%;
-  left: -50%;
-  background-image: -webkit-linear-gradient($nodeStreak 2px, transparent 2px), -webkit-linear-gradient(left, $nodeStreak 2px, transparent 2px);
-  background-size: 100px 100px,100px 100px;
-  background-position: -1px -1px,-1px -1px;
-  transform: rotateX(85deg);
-  animation: planeMoveTop $nanoVelocity infinite linear;
+  left: calc( ( 900% - 100% ) / -2 );
+  width: 900%;
+  height: 500%;
 }
-
-.bottom-plane {
-  @extend .top-plane;
-  transform: rotateX(-85deg);
-  top: -30%;
-  animation: planeMoveBot $nanoVelocity infinite linear;
+#retrobg-vlines {
+  display: flex;
+  justify-content: center;
 }
-
-@keyframes planeMoveTop {
-  from {
-    background-position: 0px -100px,0px 0px;
-  }
-  to {
-    background-position: 0px 0px, 100px 0px;
-  }
+.retrobg-hline,
+.retrobg-vline {
+  width: 100%;
+  height: 100%;
+  background-color: currentColor;
 }
-
-@keyframes planeMoveBot {
-  from {
-    background-position: 0px 0px,0px 0px;
-  }
-  to {
-    background-position: 0px -100px, 100px 0px;
-  }
-}
-
-@media (max-height: 350px) {
-  .wrap {
-    perspective: $visualDistortionZapper - 150;
-  }
-}
+.retrobg-hline { height: 3px; }
+.retrobg-vline { width: 3px; }
+.retrobg-hline + .retrobg-hline { margin-top: 98px; }
+.retrobg-vline + .retrobg-vline { margin-left: 48px; }
